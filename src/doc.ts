@@ -1,3 +1,10 @@
+/**
+ * I need to create an patched version for the `doc` function because it by default use some Deno specific dependencies.
+ * 
+ * I tried to use https://github.com/denoland/dnt to convert @deno/doc to a Node.js module but it failed because dnt cannot handle the WASM module and throw this error: https://github.com/denoland/dnt/blob/74e37c78bf485e4fc2a346e41b0f22533d0af47d/rs-lib/src/specifiers.rs#L136
+ */
+
+
 import { doc as docBase, type DocNode, type DocOptions, type LoadResponse } from './re-export'
 
 

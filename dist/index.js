@@ -1,10 +1,13 @@
 import { n as generateHtml, r as generateHtmlAsJSON, t as doc$1 } from "./deno__doc-CYZHWibW.js";
 
 //#region src/doc.ts
+/**
+* I need to create an patched version for the `doc` function because it by default use some Deno specific dependencies.
+* 
+* I tried to use https://github.com/denoland/dnt to convert @deno/doc to a Node.js module but it failed because dnt cannot handle the WASM module and throw this error: https://github.com/denoland/dnt/blob/74e37c78bf485e4fc2a346e41b0f22533d0af47d/rs-lib/src/specifiers.rs#L136
+*/
 /** Timeout for fetching modules in milliseconds */
 const FETCH_TIMEOUT_MS = 30 * 1e3;
-
-
 /**
 * Create a custom module loader for @deno/doc.
 *
