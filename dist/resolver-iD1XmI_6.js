@@ -9,8 +9,16 @@ const debug = createDebug("deno-doc-wasm");
 //#region src/resolver.ts
 function createOxcResolver() {
 	return new ResolverFactory({
-		"conditionNames": ["node", "import"],
-		"mainFields": ["module", "main"],
+		"conditionNames": [
+			"types",
+			"node",
+			"import"
+		],
+		"mainFields": [
+			"types",
+			"module",
+			"main"
+		],
 		preferRelative: true
 	});
 }
