@@ -17,4 +17,9 @@ export default defineConfig({
     '@jsr/std__bytes',
     '@jsr/std__fmt',
   ],
+  copy: [
+    {
+      from: 'node_modules/@deno/doc/deno_doc_wasm_bg.wasm', to: 'dist/' 
+    }
+  ]
 })
