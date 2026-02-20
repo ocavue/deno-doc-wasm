@@ -1,4 +1,6 @@
 import { t as doc$1 } from "./deno__doc-B3k7eFVb.js";
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 
 //#region src/doc.ts
 /**
@@ -20,6 +22,17 @@ function createLoader() {
 			url = new URL(specifier);
 		} catch {
 			console.warn(`[deno-doc-wasm] Failed to parse specifier: ${specifier}`);
+			return;
+		}
+		if (url.protocol === "file:") try {
+			return {
+				kind: "module",
+				specifier,
+				headers: {},
+				content: await readFile(fileURLToPath(url), "utf-8")
+			};
+		} catch (error) {
+			console.warn(`[deno-doc-wasm] Failed to read local file ${specifier}: ${error}`);
 			return;
 		}
 		if (url.protocol !== "http:" && url.protocol !== "https:") {

@@ -4,6 +4,9 @@
  * I tried to use https://github.com/denoland/dnt to convert @deno/doc to a Node.js module but it failed because dnt cannot handle the WASM module and throw this error: https://github.com/denoland/dnt/blob/74e37c78bf485e4fc2a346e41b0f22533d0af47d/rs-lib/src/specifiers.rs#L136
  */
 
+import { readFile } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
+
 import {
   doc as docBase,
   type DocNode,
@@ -39,9 +42,30 @@ export function createLoader(): (
       return undefined
     }
 
-    // Only handle http/https URLs
+    // Handle file:// URLs
+    if (url.protocol === 'file:') {
+      try {
+        const filePath = fileURLToPath(url)
+        const content = await readFile(filePath, 'utf-8')
+        return {
+          kind: 'module',
+          specifier,
+          headers: {},
+          content,
+        }
+      } catch (error) {
+        console.warn(
+          `[deno-doc-wasm] Failed to read local file ${specifier}: ${error}`,
+        )
+        return undefined
+      }
+    }
+
+    // Handle http/https URLs
     if (url.protocol !== 'http:' && url.protocol !== 'https:') {
-      console.warn(`[deno-doc-wasm] Unsupported protocol ${url.protocol} for specifier: ${specifier}`)
+      console.warn(
+        `[deno-doc-wasm] Unsupported protocol ${url.protocol} for specifier: ${specifier}`,
+      )
       return undefined
     }
 
@@ -56,7 +80,9 @@ export function createLoader(): (
       clearTimeout(timeoutId)
 
       if (response.status !== 200) {
-        console.warn(`[deno-doc-wasm] Failed to fetch module ${specifier}: ${response.status} ${response.statusText}`)
+        console.warn(
+          `[deno-doc-wasm] Failed to fetch module ${specifier}: ${response.status} ${response.statusText}`,
+        )
         return undefined
       }
 
@@ -74,7 +100,9 @@ export function createLoader(): (
       }
     } catch (error) {
       clearTimeout(timeoutId)
-      console.warn(`[deno-doc-wasm] Failed to fetch module ${specifier}: ${error}`)
+      console.warn(
+        `[deno-doc-wasm] Failed to fetch module ${specifier}: ${error}`,
+      )
       return undefined
     }
   }
