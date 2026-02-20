@@ -22,143 +22,131 @@ import { getOxcResolver } from './resolver'
 const FETCH_TIMEOUT_MS = 30 * 1000
 
 /**
- * Create a custom module loader for @deno/doc.
+ * Custom module loader for @deno/doc.
  *
  * Fetches modules from URLs using fetch(), with proper timeout handling.
  */
-export function createLoader(): (
+async function load(
   specifier: string,
-  isDynamic?: boolean,
-  cacheSetting?: string,
-  checksum?: string,
-) => Promise<LoadResponse | undefined> {
-  return async (
-    specifier: string,
-    _isDynamic?: boolean,
-    _cacheSetting?: string,
-    _checksum?: string,
-  ) => {
+  _isDynamic?: boolean,
+  _cacheSetting?: string,
+  _checksum?: string,
+): Promise<LoadResponse | undefined> {
+  debug("loading module %s", specifier)
 
-    debug("loading module %s", specifier)
+  let url: URL
+  try {
+    url = new URL(specifier)
+  } catch {
+    console.warn(`[deno-doc-wasm] Failed to parse specifier: ${specifier}`)
+    return undefined
+  }
 
-    let url: URL
+  // Handle file:// URLs
+  if (url.protocol === 'file:') {
     try {
-      url = new URL(specifier)
-    } catch {
-      console.warn(`[deno-doc-wasm] Failed to parse specifier: ${specifier}`)
-      return undefined
-    }
-
-    // Handle file:// URLs
-    if (url.protocol === 'file:') {
-      try {
-        const filePath = fileURLToPath(url)
-        const content = await readFile(filePath, 'utf-8')
-        return {
-          kind: 'module',
-          specifier,
-          headers: {},
-          content,
-        }
-      } catch (error) {
-        console.warn(
-          `[deno-doc-wasm] Failed to read local file ${specifier}: ${error}`,
-        )
-        return undefined
-      }
-    }
-
-    // Handle http/https URLs
-    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
-      console.warn(
-        `[deno-doc-wasm] Unsupported protocol ${url.protocol} for specifier: ${specifier}`,
-      )
-      return undefined
-    }
-
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
-
-    try {
-      const response = await fetch(url.toString(), {
-        redirect: 'follow',
-        signal: controller.signal,
-      })
-      clearTimeout(timeoutId)
-
-      if (response.status !== 200) {
-        console.warn(
-          `[deno-doc-wasm] Failed to fetch module ${specifier}: ${response.status} ${response.statusText}`,
-        )
-        return undefined
-      }
-
-      const content = await response.text()
-      const headers: Record<string, string> = {}
-      for (const [key, value] of response.headers) {
-        headers[key.toLowerCase()] = value
-      }
-
+      const filePath = fileURLToPath(url)
+      const content = await readFile(filePath, 'utf-8')
       return {
         kind: 'module',
-        specifier: response.url,
-        headers,
+        specifier,
+        headers: {},
         content,
       }
     } catch (error) {
-      clearTimeout(timeoutId)
       console.warn(
-        `[deno-doc-wasm] Failed to fetch module ${specifier}: ${error}`,
+        `[deno-doc-wasm] Failed to read local file ${specifier}: ${error}`,
       )
       return undefined
     }
+  }
+
+  // Handle http/https URLs
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    console.warn(
+      `[deno-doc-wasm] Unsupported protocol ${url.protocol} for specifier: ${specifier}`,
+    )
+    return undefined
+  }
+
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
+
+  try {
+    const response = await fetch(url.toString(), {
+      redirect: 'follow',
+      signal: controller.signal,
+    })
+    clearTimeout(timeoutId)
+
+    if (response.status !== 200) {
+      console.warn(
+        `[deno-doc-wasm] Failed to fetch module ${specifier}: ${response.status} ${response.statusText}`,
+      )
+      return undefined
+    }
+
+    const content = await response.text()
+    const headers: Record<string, string> = {}
+    for (const [key, value] of response.headers) {
+      headers[key.toLowerCase()] = value
+    }
+
+    return {
+      kind: 'module',
+      specifier: response.url,
+      headers,
+      content,
+    }
+  } catch (error) {
+    clearTimeout(timeoutId)
+    console.warn(
+      `[deno-doc-wasm] Failed to fetch module ${specifier}: ${error}`,
+    )
+    return undefined
   }
 }
 
 /**
- * Create a module resolver for @deno/doc.
+ * Module resolver for @deno/doc.
  *
  * Handles resolving relative imports and esm.sh redirects.
  */
-function createResolver(): (specifier: string, referrer: string) => string {
-  return (specifier: string, referrer: string) => {
+function resolve(specifier: string, referrer: string): string {
+  debug("resolving module %s from %s", specifier, referrer)
 
-    debug("resolving module %s from %s", specifier, referrer)
-
-
-    // Handle relative imports
-    if (specifier.startsWith('.') || specifier.startsWith('/')) {
-      return new URL(specifier, referrer).toString()
-    }
-
-    // Handle bare specifiers - resolve through esm.sh
-    if (!specifier.startsWith('http://') && !specifier.startsWith('https://')) {
-      // Try to resolve bare specifier relative to esm.sh base
-      const baseUrl = new URL(referrer)
-      if (baseUrl.hostname === 'esm.sh') {
-        return `https://esm.sh/${specifier}`
-      }
-    }
-
-    if (referrer.startsWith("file://")) {
-      const filePath = fileURLToPath(new URL(referrer))
-      debug("filePath: %s", filePath)
-      const resolver = getOxcResolver()
-      const resolved = resolver.resolveFileSync(filePath, specifier)
-      if (resolved.error) {
-        console.warn(`[deno-doc-wasm] Failed to resolve file ${specifier} from ${filePath} using oxc-resolver: ${resolved.error}`)
-      }
-      const resolvedPath = resolved.path
-      if (resolvedPath) {
-        const relativeURL = pathToFileURL(resolvedPath).toString()
-        debug("relativeURL: %s", relativeURL)
-        return relativeURL
-      }
-    }
-
-    console.warn(`[deno-doc-wasm] ~~ Failed to resolve module ${specifier} from ${referrer}`)
-    return specifier
+  // Handle relative imports
+  if (specifier.startsWith('.') || specifier.startsWith('/')) {
+    return new URL(specifier, referrer).toString()
   }
+
+  // Handle bare specifiers - resolve through esm.sh
+  if (!specifier.startsWith('http://') && !specifier.startsWith('https://')) {
+    // Try to resolve bare specifier relative to esm.sh base
+    const baseUrl = new URL(referrer)
+    if (baseUrl.hostname === 'esm.sh') {
+      return `https://esm.sh/${specifier}`
+    }
+  }
+
+  if (referrer.startsWith("file://")) {
+    const filePath = fileURLToPath(new URL(referrer))
+    debug("filePath: %s", filePath)
+    const oxcResolver = getOxcResolver()
+    const resolved = oxcResolver.resolveFileSync(filePath, specifier)
+    if (resolved.error) {
+      console.warn(`[deno-doc-wasm] Failed to resolve file ${specifier} from ${filePath} using oxc-resolver: ${resolved.error}`)
+    }
+    const resolvedPath = resolved.path
+    if (resolvedPath) {
+      const relativeURL = pathToFileURL(resolvedPath).toString()
+      debug("relativeURL: %s", relativeURL)
+      return relativeURL
+    }
+  }
+
+  console.warn(`[deno-doc-wasm] ~~ Failed to resolve module ${specifier} from ${referrer}`)
+  return specifier
 }
 
 /**
@@ -188,10 +176,10 @@ export function doc(
 ): Promise<Record<string, Array<DocNode>>> {
   const docOptions: DocOptions = { ...options }
   if (!docOptions.load) {
-    docOptions.load = createLoader()
+    docOptions.load = loader
   }
   if (!docOptions.resolve) {
-    docOptions.resolve = createResolver()
+    docOptions.resolve = resolver
   }
   return docBase(specifiers, docOptions)
 }

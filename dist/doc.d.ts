@@ -1,12 +1,6 @@
-import { Bt as DocNode, t as DocOptions, v as LoadResponse } from "./mod-D-2tLAqi.js";
+import { Bt as DocNode, t as DocOptions } from "./mod-D-2tLAqi.js";
 
 //#region src/doc.d.ts
-/**
- * Create a custom module loader for @deno/doc.
- *
- * Fetches modules from URLs using fetch(), with proper timeout handling.
- */
-declare function createLoader(): (specifier: string, isDynamic?: boolean, cacheSetting?: string, checksum?: string) => Promise<LoadResponse | undefined>;
 /**
  * Generate asynchronously an array of documentation nodes for the supplied
  * module.
@@ -30,4 +24,4 @@ declare function createLoader(): (specifier: string, isDynamic?: boolean, cacheS
  */
 declare function doc(specifiers: string[], options?: DocOptions): Promise<Record<string, Array<DocNode>>>;
 //#endregion
-export { createLoader, doc };
+export { doc };
