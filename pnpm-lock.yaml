@@ -14,7 +14,7 @@ importers:
   .:
     devDependencies:
       '@deno/doc':
-        specifier: npm:@jsr/deno__doc@^0.193.0
+        specifier: jsr:^0.193.0
         version: '@jsr/deno__doc@0.193.0(patch_hash=88989fa32ba8fd0ac201c1e10135e7cdc79546d69f22ba4ef6da1714a8b149d0)'
       '@ocavue/eslint-config':
         specifier: ^4.1.0
