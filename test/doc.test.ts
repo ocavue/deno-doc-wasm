@@ -32,7 +32,6 @@ it('can parse from unpkg.com', async () => {
   const url = 'https://unpkg.com/@ocavue/utils@1.5.0'
   const records = await doc([url])
   const entries = records[url]
-  console.log("entries", entries)
   expect(entries.map(entry => ({
     name: entry.name,
     kind: entry.kind,
