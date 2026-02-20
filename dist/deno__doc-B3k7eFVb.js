@@ -1,4 +1,4 @@
-//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=9e2413364fbb4f82b21f084dbf3abb5df6b03eb5344ffd581b6d7dec1be5af3e/node_modules/@jsr/deno__doc/deno_doc_wasm.generated.js
+//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=88989fa32ba8fd0ac201c1e10135e7cdc79546d69f22ba4ef6da1714a8b149d0/node_modules/@jsr/deno__doc/deno_doc_wasm.generated.js
 let wasm$1;
 const heap$1 = new Array(128).fill(void 0);
 heap$1.push(void 0, null, true, false);
@@ -673,9 +673,13 @@ var WasmBuildLoader = class {
 			} else if (result != null) return WebAssembly.instantiate(result, imports);
 		} catch {}
 		const isFile = url.protocol === "file:";
-		const isNode = globalThis.process?.versions?.node != null;
-		if (isFile && typeof Deno !== "object") throw new Error("Loading local files are not supported in this environment");
-		if (isNode && isFile) {
+		if (globalThis.process?.versions?.node != null && isFile) {
+			const { readFileSync } = await import("node:fs");
+			const { fileURLToPath } = await import("node:url");
+			const wasmCode = readFileSync(fileURLToPath(url));
+			return WebAssembly.instantiate(decompress ? decompress(wasmCode) : wasmCode, imports);
+		}
+		if (typeof Deno === "object" && isFile) {
 			const wasmCode = await Deno.readFile(url);
 			return WebAssembly.instantiate(decompress ? decompress(wasmCode) : wasmCode, imports);
 		}
@@ -3040,7 +3044,7 @@ async function fetchWithRetries(url, init) {
 }
 
 //#endregion
-//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=9e2413364fbb4f82b21f084dbf3abb5df6b03eb5344ffd581b6d7dec1be5af3e/node_modules/@jsr/deno__doc/mod.js
+//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=88989fa32ba8fd0ac201c1e10135e7cdc79546d69f22ba4ef6da1714a8b149d0/node_modules/@jsr/deno__doc/mod.js
 const encoder = new TextEncoder();
 /**
 * Generate asynchronously an array of documentation nodes for the supplied

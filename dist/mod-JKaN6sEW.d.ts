@@ -1,4 +1,4 @@
-//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=9e2413364fbb4f82b21f084dbf3abb5df6b03eb5344ffd581b6d7dec1be5af3e/node_modules/@jsr/deno__doc/types.d.ts
+//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=88989fa32ba8fd0ac201c1e10135e7cdc79546d69f22ba4ef6da1714a8b149d0/node_modules/@jsr/deno__doc/types.d.ts
 // Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
 type DocNode = DocNodeModuleDoc | DocNodeFunction | DocNodeVariable | DocNodeEnum | DocNodeClass | DocNodeTypeAlias | DocNodeNamespace | DocNodeInterface | DocNodeImport | DocNodeReference;
 /** Indicates how the documentation node was declared. `"private"` indicates
@@ -535,7 +535,7 @@ interface VariableDef {
   kind: VariableDeclKind;
 }
 //#endregion
-//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=9e2413364fbb4f82b21f084dbf3abb5df6b03eb5344ffd581b6d7dec1be5af3e/node_modules/@jsr/deno__doc/html_types.d.ts
+//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=88989fa32ba8fd0ac201c1e10135e7cdc79546d69f22ba4ef6da1714a8b149d0/node_modules/@jsr/deno__doc/html_types.d.ts
 // Copyright 2018-2025 the Deno authors. All rights reserved. MIT license.
 interface HtmlHeadCtx {
   title: string;
@@ -877,7 +877,7 @@ type LoadResponse = LoadResponseModule | LoadResponseRedirect | LoadResponseExte
 //#region node_modules/.pnpm/@jsr+deno__graph@0.100.1/node_modules/@jsr/deno__graph/_dist/mod.d.ts
 type CacheSetting = "only" | "use" | "reload";
 //#endregion
-//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=9e2413364fbb4f82b21f084dbf3abb5df6b03eb5344ffd581b6d7dec1be5af3e/node_modules/@jsr/deno__doc/_dist/mod.d.ts
+//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=88989fa32ba8fd0ac201c1e10135e7cdc79546d69f22ba4ef6da1714a8b149d0/node_modules/@jsr/deno__doc/_dist/mod.d.ts
 interface DocOptions {
   /** An optional URL string which provides a location of an import map to be
    * loaded and used to resolve module specifiers. This should be an absolute

@@ -1,4 +1,4 @@
-import { n as generateHtml, r as generateHtmlAsJSON, t as doc$1 } from "./deno__doc-CYZHWibW.js";
+import { n as generateHtml, r as generateHtmlAsJSON, t as doc$1 } from "./deno__doc-B3k7eFVb.js";
 
 //#region src/doc.ts
 /**
