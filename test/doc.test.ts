@@ -41,6 +41,26 @@ it('can parse from deno.land', async () => {
   ])
 })
 
+it('can resolve node modules', async () => {
+  const url = pathToFileURL(
+    join(import.meta.dirname, 'fixtures', 'test-node-module.ts'),
+  ).toString()
+  const records = await doc([url])
+  const entries = records[url]
+  const simplifiedEntries = entries.map((entry) => ({
+    name: entry.name,
+    kind: entry.kind,
+  }))
+  expect(simplifiedEntries).toContainEqual({
+    name: 'createHighlightPlugin',
+    kind: 'function',
+  })
+  expect(simplifiedEntries).toContainEqual({
+    name: 'withLineNumbers',
+    kind: 'function',
+  })
+})
+
 it('can parse from unpkg.com', async () => {
   const url = 'https://unpkg.com/@ocavue/utils@1.5.0'
   const records = await doc([url])
