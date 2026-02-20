@@ -4,8 +4,8 @@ import { ResolverFactory } from "oxc-resolver"
 
 function createOxcResolver() {
     return new ResolverFactory({
-        "conditionNames": ["node", "import"],
-        "mainFields": ["module", "main"],
+        "conditionNames": ["types", "node", "import"],
+        "mainFields": ["types", "module", "main"],
         preferRelative: true,
     })
 }
