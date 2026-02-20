@@ -5,8 +5,8 @@
 Documentation generator for Node.js and Bun.
 
 - **[`deno_doc`](https://github.com/denoland/deno_doc)** is a **Rust** crate that generates documentation for JavaScript and TypeScript modules.
-- **[`@deno/doc`](https://jsr.io/@deno/doc)** is a compiled WebAssembly version of the Rust crate for **Deno**, published to [jsr.io](https://jsr.io).
-- **[`deno-doc-wasm`]** (this project) is a re-distribution of the `jsr:@deno/doc` package so that it can work in **Node.js** and **Bun** as well, published to [npm](https://www.npmjs.com/package/deno-doc-wasm).
+- **[`@deno/doc`](https://github.com/denoland/deno_doc/tree/main/js)** is a compiled WebAssembly version of the Rust crate for **Deno**, published to [jsr.io](https://jsr.io).
+- **[`deno-doc-wasm`](https://github)** (this project) is a re-distribution of the `jsr:@deno/doc` package so that it can work in **Node.js** and **Bun** as well, published to [npm](https://www.npmjs.com/package/deno-doc-wasm).
 
 ## Installation
 
@@ -25,7 +25,7 @@ A minimal example of using `doc()` and printing out some information about a
 function:
 
 ```ts
-import { doc } from '@deno/doc'
+import { doc } from 'deno-doc-wasm'
 
 const records = await doc(['https://deno.land/std/fmt/colors.ts'])
 const colorsDoc = records['https://deno.land/std/fmt/colors.ts']
