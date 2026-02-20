@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@deno/doc':
+        specifier: npm:@jsr/deno__doc@^0.193.0
+        version: '@jsr/deno__doc@0.193.0'
     devDependencies:
       '@ocavue/eslint-config':
         specifier: ^3.10.0
@@ -431,6 +435,36 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@jsr/deno__cache-dir@0.25.0':
+    resolution: {integrity: sha512-J5/kPR8sc+dsRyE8rnLPhqay7B4XgBmkv7QaeIV41sGibszQjIb8b599LssN1YWBbqPLakPRMVobg5u6LheWfg==, tarball: https://npm.jsr.io/~/11/@jsr/deno__cache-dir/0.25.0.tgz}
+
+  '@jsr/deno__doc@0.193.0':
+    resolution: {integrity: sha512-PmPushAejFlnZuXx1yC+usbCABjdBgYRfEGEBHxPon/7698Bc4wGaS59OaLbEnLCHFwXKXs1V0rXi+E1LvIX3Q==, tarball: https://npm.jsr.io/~/11/@jsr/deno__doc/0.193.0.tgz}
+
+  '@jsr/deno__graph@0.100.1':
+    resolution: {integrity: sha512-mPemftpdwtz8fo+RNKujjXKpDQRcj5E0nOcxeNiDGLRzqQk/Q69IcGM4ruZGX+0xhTNNSLc8Uu3W4ynIDfTR6g==, tarball: https://npm.jsr.io/~/11/@jsr/deno__graph/0.100.1.tgz}
+
+  '@jsr/deno__graph@0.86.9':
+    resolution: {integrity: sha512-+qrrma5/bL+hcG20mfaEeC8SLopqoyd1RjcKFMRu++3SAXyrTKuvuIjBJCn/NyN7X+kV+QrJG67BCHX38Rzw+g==, tarball: https://npm.jsr.io/~/11/@jsr/deno__graph/0.86.9.tgz}
+
+  '@jsr/std__bytes@1.0.6':
+    resolution: {integrity: sha512-St6yKggjFGhxS52IFLJWvkchRFbAKg2Xh8UxA4S1EGz7GJ2Ui+ssDDldj/w2c8vCxvl6qgR0HaYbKeFJNqujmA==, tarball: https://npm.jsr.io/~/11/@jsr/std__bytes/1.0.6.tgz}
+
+  '@jsr/std__fmt@1.0.9':
+    resolution: {integrity: sha512-YFJJMozmORj2K91c5J9opWeh0VUwrd+Mwb7Pr0FkVCAKVLu2UhT4LyvJqWiyUT+eF+MdfqQ9F7RtQj4bXn9Smw==, tarball: https://npm.jsr.io/~/11/@jsr/std__fmt/1.0.9.tgz}
+
+  '@jsr/std__fs@1.0.23':
+    resolution: {integrity: sha512-e8jspB3M44E5YhWiLCTqibBBTwVmxQaHN06WvFa/elAKm5E/LfAe8Hj5XGNC8P7a0MIPASlNJsnF1bgO/g+aqg==, tarball: https://npm.jsr.io/~/11/@jsr/std__fs/1.0.23.tgz}
+
+  '@jsr/std__internal@1.0.12':
+    resolution: {integrity: sha512-6xReMW9p+paJgqoFRpOE2nogJFvzPfaLHLIlyADYjKMUcwDyjKZxryIbgcU+gxiTygn8yCjld1HoI0ET4/iZeA==, tarball: https://npm.jsr.io/~/11/@jsr/std__internal/1.0.12.tgz}
+
+  '@jsr/std__io@0.225.3':
+    resolution: {integrity: sha512-IDXY253ipW6FV34CJVxO+3ubfvSEEzw9N2W303KnLe9K/Y9+v/ID1dQYf9VsCCOFMpFtCmOLqzIZsRqv6yQnWw==, tarball: https://npm.jsr.io/~/11/@jsr/std__io/0.225.3.tgz}
+
+  '@jsr/std__path@1.1.4':
+    resolution: {integrity: sha512-SK4u9H6NVTfolhPdlvdYXfNFefy1W04AEHWJydryYbk+xqzNiVmr5o7TLJLJFqwHXuwMRhwrn+mcYeUfS0YFaA==, tarball: https://npm.jsr.io/~/11/@jsr/std__path/1.1.4.tgz}
 
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
@@ -2556,6 +2590,42 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@jsr/deno__cache-dir@0.25.0':
+    dependencies:
+      '@jsr/deno__graph': 0.86.9
+      '@jsr/std__fmt': 1.0.9
+      '@jsr/std__fs': 1.0.23
+      '@jsr/std__io': 0.225.3
+      '@jsr/std__path': 1.1.4
+
+  '@jsr/deno__doc@0.193.0':
+    dependencies:
+      '@jsr/deno__cache-dir': 0.25.0
+      '@jsr/deno__graph': 0.100.1
+
+  '@jsr/deno__graph@0.100.1': {}
+
+  '@jsr/deno__graph@0.86.9': {}
+
+  '@jsr/std__bytes@1.0.6': {}
+
+  '@jsr/std__fmt@1.0.9': {}
+
+  '@jsr/std__fs@1.0.23':
+    dependencies:
+      '@jsr/std__internal': 1.0.12
+      '@jsr/std__path': 1.1.4
+
+  '@jsr/std__internal@1.0.12': {}
+
+  '@jsr/std__io@0.225.3':
+    dependencies:
+      '@jsr/std__bytes': 1.0.6
+
+  '@jsr/std__path@1.1.4':
+    dependencies:
+      '@jsr/std__internal': 1.0.12
 
   '@napi-rs/wasm-runtime@0.2.12':
     dependencies:
