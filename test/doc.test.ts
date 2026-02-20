@@ -1,12 +1,22 @@
-import { writeFile, mkdir, rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
-import { it, assert, expect, describe, beforeAll, afterAll } from 'vitest'
+import { it, assert, expect } from 'vitest'
 
 import { doc } from '../dist/index.js'
 
-it('can parse from deno.land/std/fmt/colors.ts', async () => {
+it('can parse from a local file', async () => {
+  const url = pathToFileURL(
+    join(import.meta.dirname, 'fixtures', 'test-module.ts'),
+  ).toString()
+  const records = await doc([url])
+  const entries = records[url]
+  expect(entries).toHaveLength(1)
+  expect(entries[0].name).toBe('greet')
+  expect(entries[0].kind).toBe('function')
+})
+
+it('can parse from deno.land', async () => {
   const url = 'https://deno.land/std@0.104.0/fmt/colors.ts'
   const records = await doc([url])
   const entries = records[url]
@@ -30,7 +40,6 @@ it('can parse from deno.land/std/fmt/colors.ts', async () => {
     },
   ])
 })
-
 
 it('can parse from unpkg.com', async () => {
   const url = 'https://unpkg.com/@ocavue/utils@1.5.0'
@@ -172,31 +181,4 @@ it('can parse from unpkg.com', async () => {
       },
     ]
   `)
-})
-
-
-
-describe('local file', () => {
-  const tmpDir = join(import.meta.dirname, '..', 'node_modules', '.tmp-test')
-  const tsFilePath = join(tmpDir, 'test-module.ts')
-  const tsFileContent =
-    'export function greet(name: string): string { return `Hello, ${name}!` }\n'
-
-  beforeAll(async () => {
-    await mkdir(tmpDir, { recursive: true })
-    await writeFile(tsFilePath, tsFileContent)
-  })
-
-  afterAll(async () => {
-    await rm(tmpDir, { recursive: true, force: true })
-  })
-
-  it('can parse from a local file', async () => {
-    const url = pathToFileURL(tsFilePath).toString()
-    const records = await doc([url])
-    const entries = records[url]
-    expect(entries).toHaveLength(1)
-    expect(entries[0].name).toBe('greet')
-    expect(entries[0].kind).toBe('function')
-  })
 })
