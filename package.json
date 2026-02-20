@@ -35,6 +35,9 @@
     "test": "vitest",
     "typecheck": "tsc -b"
   },
+  "dependencies": {
+    "obug": "^2.1.1"
+  },
   "devDependencies": {
     "@deno/doc": "jsr:^0.193.0",
     "@ocavue/eslint-config": "^4.1.0",

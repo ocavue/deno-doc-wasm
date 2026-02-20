@@ -7,6 +7,7 @@
 import { readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 
+import { debug } from './debug';
 import {
   doc as docBase,
   type DocNode,
@@ -34,6 +35,9 @@ export function createLoader(): (
     _cacheSetting?: string,
     _checksum?: string,
   ) => {
+
+    debug("loading module %s", specifier)
+
     let url: URL
     try {
       url = new URL(specifier)
@@ -115,6 +119,10 @@ export function createLoader(): (
  */
 function createResolver(): (specifier: string, referrer: string) => string {
   return (specifier: string, referrer: string) => {
+
+    debug("resolving module %s from %s", specifier, referrer)
+
+
     // Handle relative imports
     if (specifier.startsWith('.') || specifier.startsWith('/')) {
       return new URL(specifier, referrer).toString()
