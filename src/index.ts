@@ -191,4 +191,6 @@ export type {
   VariableDeclKind,
   VariableDef,
 } from './re-export'
-export { doc, generateHtml, generateHtmlAsJSON } from './re-export'
+export { generateHtml, generateHtmlAsJSON } from './re-export'
+export { doc } from './doc'
+
