@@ -7,11 +7,10 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@deno/doc':
         specifier: npm:@jsr/deno__doc@^0.193.0
         version: '@jsr/deno__doc@0.193.0'
-    devDependencies:
       '@ocavue/eslint-config':
         specifier: ^3.10.0
         version: 3.10.0(@types/estree@1.0.8)(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(@typescript-eslint/utils@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(jsonc-eslint-parser@2.4.1)(typescript@5.9.3)
