@@ -1,7 +1,8 @@
 import { t as doc$1 } from "./deno__doc-B3k7eFVb.js";
 import { t as debug } from "./debug-C007cULw.js";
 import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { ResolverFactory } from "oxc-resolver";
 
 //#region src/doc.ts
 /**
@@ -9,6 +10,11 @@ import { fileURLToPath } from "node:url";
 *
 * I tried to use https://github.com/denoland/dnt to convert @deno/doc to a Node.js module but it failed because dnt cannot handle the WASM module and throw this error: https://github.com/denoland/dnt/blob/74e37c78bf485e4fc2a346e41b0f22533d0af47d/rs-lib/src/specifiers.rs#L136
 */
+const resolver = new ResolverFactory({
+	"conditionNames": ["node", "import"],
+	"mainFields": ["module", "main"],
+	preferRelative: true
+});
 /** Timeout for fetching modules in milliseconds */
 const FETCH_TIMEOUT_MS = 30 * 1e3;
 /**
@@ -81,6 +87,19 @@ function createResolver() {
 		if (!specifier.startsWith("http://") && !specifier.startsWith("https://")) {
 			if (new URL(referrer).hostname === "esm.sh") return `https://esm.sh/${specifier}`;
 		}
+		if (referrer.startsWith("file://")) {
+			const filePath = fileURLToPath(new URL(referrer));
+			debug("filePath: %s", filePath);
+			const resolved = resolver.resolveFileSync(filePath, specifier);
+			if (resolved.error) console.warn(`[deno-doc-wasm] Failed to resolve file ${specifier} from ${filePath} using oxc-resolver: ${resolved.error}`);
+			const resolvedPath = resolved.path;
+			if (resolvedPath) {
+				const relativeURL = pathToFileURL(resolvedPath).toString();
+				debug("relativeURL: %s", relativeURL);
+				return relativeURL;
+			}
+		}
+		console.warn(`[deno-doc-wasm] ~~ Failed to resolve module ${specifier} from ${referrer}`);
 		return specifier;
 	};
 }

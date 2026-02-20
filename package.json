@@ -36,7 +36,8 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
-    "obug": "^2.1.1"
+    "obug": "^2.1.1",
+    "oxc-resolver": "^11.17.1"
   },
   "devDependencies": {
     "@deno/doc": "jsr:^0.193.0",
