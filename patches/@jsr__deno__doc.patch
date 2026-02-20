@@ -5,6 +5,21 @@ index 0000000000000000000000000000000000000000..cb0ff5c3b541f646105198ee23ac0fc3
 +++ b/html_types.js
 @@ -0,0 +1 @@
 +export {};
+diff --git a/mod.js b/mod.js
+index f9d9de1349c2bb575b29138a5fc54654e92c4a47..79bfddf14a5603f7a66b58e6e8d3fa25a891b27a 100755
+--- a/mod.js
++++ b/mod.js
+@@ -1,8 +1,8 @@
+ // Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
+ import { instantiate } from "./deno_doc_wasm.generated.js";
+ import { createCache } from "@jsr/deno__cache-dir";
+-export * from "./types.d.ts";
+-export * from "./html_types.d.ts";
++export * from "./types.js";
++export * from "./html_types.js";
+ const encoder = new TextEncoder();
+ /**
+  * Generate asynchronously an array of documentation nodes for the supplied
 diff --git a/package.json b/package.json
 index 43cd2d00c5782b406398ed791c95b538607020cd..84d47ef25695112cb4ad8f4c2c3558fb779774d3 100755
 --- a/package.json
