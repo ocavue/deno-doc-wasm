@@ -5,8 +5,8 @@
 Documentation generator for Node.js and Bun.
 
 - **[`deno_doc`](https://github.com/denoland/deno_doc)** is a **Rust** crate that generates documentation for JavaScript and TypeScript modules.
-- **[`jsr:@deno/doc`](https://jsr.io/@deno/doc)** is a compiled WebAssembly version of the Rust crate for **Deno**.
-- **[`deno-doc-wasm`]** (this project) is a re-distribution of the `jsr:@deno/doc` package so that it can work in **Node.js** and **Bun** as well.
+- **[`@deno/doc`](https://jsr.io/@deno/doc)** is a compiled WebAssembly version of the Rust crate for **Deno**, published to [jsr.io](https://jsr.io).
+- **[`deno-doc-wasm`]** (this project) is a re-distribution of the `jsr:@deno/doc` package so that it can work in **Node.js** and **Bun** as well, published to [npm](https://www.npmjs.com/package/deno-doc-wasm).
 
 ## Installation
 
@@ -37,12 +37,12 @@ for (const node of colorsDoc) {
 
 ## API reference
 
-Please refer to the documentation for the original [`jsr:@deno/doc`](https://jsr.io/@deno/doc/doc) package.
+Please refer to the documentation for the original [`@deno/doc`](https://jsr.io/@deno/doc/doc) package.
 
 ## Credits
 
 - This project would not be possible without the excellent work by the [Deno](https://deno.com/) team. The [`deno_doc`](https://github.com/denoland/deno_doc) crate is a well-designed and powerful documentation generator.
-- Inspired by [@devdumpling](https://github.com/devdumpling)'s [work](https://github.com/npmx-dev/npmx.dev/pull/135) on integrating `@deno/doc` WASM into Node.js for [npmx.dev](https://npmx.dev).
+- Inspired by [@devdumpling](https://github.com/devdumpling)'s [work](https://github.com/npmx-dev/npmx.dev/pull/135) on integrating `@deno/doc` for [npmx.dev](https://npmx.dev).
 
 ## License
 
