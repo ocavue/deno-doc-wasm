@@ -1,0 +1,33 @@
+diff --git a/html_types.js b/html_types.js
+new file mode 100755
+index 0000000000000000000000000000000000000000..cb0ff5c3b541f646105198ee23ac0fc3d805023e
+--- /dev/null
++++ b/html_types.js
+@@ -0,0 +1 @@
++export {};
+diff --git a/package.json b/package.json
+index 43cd2d00c5782b406398ed791c95b538607020cd..84d47ef25695112cb4ad8f4c2c3558fb779774d3 100755
+--- a/package.json
++++ b/package.json
+@@ -13,10 +13,12 @@
+       "default": "./mod.js"
+     },
+     "./types": {
+-      "default": "./types.d.ts"
++      "types": "./types.d.ts",
++      "default": "./types.js"
+     },
+     "./html-types": {
+-      "default": "./html_types.d.ts"
++      "types": "./html_types.d.ts",
++      "default": "./html_types.js"
+     }
+   },
+   "_jsr_revision": 11
+diff --git a/types.js b/types.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..cb0ff5c3b541f646105198ee23ac0fc3d805023e
+--- /dev/null
++++ b/types.js
+@@ -0,0 +1 @@
++export {};

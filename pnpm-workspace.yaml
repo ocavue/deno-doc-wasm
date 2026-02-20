@@ -1,1 +1,4 @@
 ignoreWorkspaceRootCheck: true
+
+patchedDependencies:
+  '@jsr/deno__doc': patches/@jsr__deno__doc.patch
