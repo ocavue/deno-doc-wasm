@@ -27,12 +27,11 @@ it('can parse from deno.land/std/fmt/colors.ts', async () => {
   ])
 })
 
-
 it('can parse from unpkg.com', async () => {
   const url = 'https://unpkg.com/@ocavue/utils@1.5.0'
   const records = await doc([url])
   const entries = records[url]
-  const simplifiedEntries = entries.map(entry => ({
+  const simplifiedEntries = entries.map((entry) => ({
     name: entry.name,
     kind: entry.kind,
   }))
