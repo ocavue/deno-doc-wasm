@@ -1,4 +1,4 @@
-import { Bt as DocNode, t as DocOptions, v as LoadResponse } from "./mod-JKaN6sEW.js";
+import { Bt as DocNode, t as DocOptions, v as LoadResponse } from "./mod-D-2tLAqi.js";
 
 //#region src/doc.d.ts
 /**

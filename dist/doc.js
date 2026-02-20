@@ -1,4 +1,5 @@
 import { t as doc$1 } from "./deno__doc-B3k7eFVb.js";
+import { t as debug } from "./debug-C007cULw.js";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
@@ -17,6 +18,7 @@ const FETCH_TIMEOUT_MS = 30 * 1e3;
 */
 function createLoader() {
 	return async (specifier, _isDynamic, _cacheSetting, _checksum) => {
+		debug("loading module %s", specifier);
 		let url;
 		try {
 			url = new URL(specifier);
@@ -74,6 +76,7 @@ function createLoader() {
 */
 function createResolver() {
 	return (specifier, referrer) => {
+		debug("resolving module %s from %s", specifier, referrer);
 		if (specifier.startsWith(".") || specifier.startsWith("/")) return new URL(specifier, referrer).toString();
 		if (!specifier.startsWith("http://") && !specifier.startsWith("https://")) {
 			if (new URL(referrer).hostname === "esm.sh") return `https://esm.sh/${specifier}`;
