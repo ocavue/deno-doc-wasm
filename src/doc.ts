@@ -46,6 +46,12 @@ async function load(
   if (url.protocol === 'file:') {
     try {
       const filePath = fileURLToPath(url)
+      // const base = import.meta.dirname
+      const base = '.'
+      const filePath2 = getOxcResolver().resolveFileSync(filePath, base)?.path
+      if (filePath !== filePath2) {
+        console.warn(`[deno-doc-wasm] Updated ${filePath} -> ${filePath2} from ${base}`)
+      }
       const content = await readFile(filePath, 'utf-8')
       return {
         kind: 'module',
@@ -54,6 +60,9 @@ async function load(
         content,
       }
     } catch (error) {
+
+
+
       console.warn(
         `[deno-doc-wasm] Failed to read local file ${specifier}: ${error}`,
       )
