@@ -35,11 +35,13 @@ export function createLoader(): (
     try {
       url = new URL(specifier)
     } catch {
+      console.warn(`[deno-doc-wasm] Failed to parse specifier: ${specifier}`)
       return undefined
     }
 
     // Only handle http/https URLs
     if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      console.warn(`[deno-doc-wasm] Unsupported protocol ${url.protocol} for specifier: ${specifier}`)
       return undefined
     }
 
@@ -54,6 +56,7 @@ export function createLoader(): (
       clearTimeout(timeoutId)
 
       if (response.status !== 200) {
+        console.warn(`[deno-doc-wasm] Failed to fetch module ${specifier}: ${response.status} ${response.statusText}`)
         return undefined
       }
 
@@ -69,8 +72,9 @@ export function createLoader(): (
         headers,
         content,
       }
-    } catch {
+    } catch (error) {
       clearTimeout(timeoutId)
+      console.warn(`[deno-doc-wasm] Failed to fetch module ${specifier}: ${error}`)
       return undefined
     }
   }
