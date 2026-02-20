@@ -19,9 +19,13 @@ function createLoader() {
 		try {
 			url = new URL(specifier);
 		} catch {
+			console.warn(`[deno-doc-wasm] Failed to parse specifier: ${specifier}`);
 			return;
 		}
-		if (url.protocol !== "http:" && url.protocol !== "https:") return;
+		if (url.protocol !== "http:" && url.protocol !== "https:") {
+			console.warn(`[deno-doc-wasm] Unsupported protocol ${url.protocol} for specifier: ${specifier}`);
+			return;
+		}
 		const controller = new AbortController();
 		const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 		try {
@@ -30,7 +34,10 @@ function createLoader() {
 				signal: controller.signal
 			});
 			clearTimeout(timeoutId);
-			if (response.status !== 200) return;
+			if (response.status !== 200) {
+				console.warn(`[deno-doc-wasm] Failed to fetch module ${specifier}: ${response.status} ${response.statusText}`);
+				return;
+			}
 			const content = await response.text();
 			const headers = {};
 			for (const [key, value] of response.headers) headers[key.toLowerCase()] = value;
@@ -40,8 +47,9 @@ function createLoader() {
 				headers,
 				content
 			};
-		} catch {
+		} catch (error) {
 			clearTimeout(timeoutId);
+			console.warn(`[deno-doc-wasm] Failed to fetch module ${specifier}: ${error}`);
 			return;
 		}
 	};
