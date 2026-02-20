@@ -1,1 +1,1 @@
-export * from '@deno/doc'
+export * from './re-export'
