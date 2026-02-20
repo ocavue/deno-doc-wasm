@@ -1,5 +1,5 @@
 import { t as doc$1 } from "./deno__doc-B3k7eFVb.js";
-import { n as debug, t as getOxcResolver } from "./resolver-iD1XmI_6.js";
+import { n as debug, t as getOxcResolver } from "./resolver-accVn-XW.js";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
 

@@ -7,6 +7,18 @@ function createOxcResolver() {
         "conditionNames": ["types", "node", "import"],
         "mainFields": ["types", "module", "main"],
         preferRelative: true,
+        tsconfig: "auto",
+        extensions: [".ts", ".d.ts", ".mts", ".d.mts", ".cts", ".d.cts", ".js", ".mjs", ".cjs",
+            ".js", ".json", ".node"
+        ],
+        extensionAlias: {
+            ".js": [ ".d.ts", ".ts",],
+            ".cjs": [".cts", ".d.cts", ".ts", ".d.ts"],
+            ".mjs": [".mts", ".d.mts", ".ts", ".d.ts"],
+            // "js": ["ts", "d.ts"],
+            // "cjs": ["cts", "d.cts", "ts", "d.ts"],
+            // "mjs": ["mts", "d.mts", "ts", "d.ts"],
+        }
     })
 }
 

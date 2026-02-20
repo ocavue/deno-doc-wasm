@@ -19,7 +19,37 @@ function createOxcResolver() {
 			"module",
 			"main"
 		],
-		preferRelative: true
+		preferRelative: true,
+		tsconfig: "auto",
+		extensions: [
+			".ts",
+			".d.ts",
+			".mts",
+			".d.mts",
+			".cts",
+			".d.cts",
+			".js",
+			".mjs",
+			".cjs",
+			".js",
+			".json",
+			".node"
+		],
+		extensionAlias: {
+			".js": [".d.ts", ".ts"],
+			".cjs": [
+				".cts",
+				".d.cts",
+				".ts",
+				".d.ts"
+			],
+			".mjs": [
+				".mts",
+				".d.mts",
+				".ts",
+				".d.ts"
+			]
+		}
 	});
 }
 const getOxcResolver = once(createOxcResolver);
