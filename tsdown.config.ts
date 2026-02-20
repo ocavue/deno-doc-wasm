@@ -5,4 +5,16 @@ export default defineConfig({
   format: ['esm'],
   dts: { build: true },
   fixedExtension: false,
+  sourcemap: false,
+  inlineOnly: [
+    '@jsr/deno__graph',
+    '@jsr/deno__doc',
+    '@jsr/deno__cache-dir',
+    '@jsr/std__internal',
+    '@jsr/std__path',
+    '@jsr/std__fs',
+    '@jsr/std__io',
+    '@jsr/std__bytes',
+    '@jsr/std__fmt',
+  ],
 })
