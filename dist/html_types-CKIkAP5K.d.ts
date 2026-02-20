@@ -1,4 +1,4 @@
-//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0/node_modules/@jsr/deno__doc/types.d.ts
+//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=00a71c067c8ba1d88a98e37be234632ebfaf4f244bc6332903680367001590f2/node_modules/@jsr/deno__doc/types.d.ts
 // Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
 type DocNode = DocNodeModuleDoc | DocNodeFunction | DocNodeVariable | DocNodeEnum | DocNodeClass | DocNodeTypeAlias | DocNodeNamespace | DocNodeInterface | DocNodeImport | DocNodeReference;
 /** Indicates how the documentation node was declared. `"private"` indicates
@@ -535,7 +535,7 @@ interface VariableDef {
   kind: VariableDeclKind;
 }
 //#endregion
-//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0/node_modules/@jsr/deno__doc/html_types.d.ts
+//#region node_modules/.pnpm/@jsr+deno__doc@0.193.0_patch_hash=00a71c067c8ba1d88a98e37be234632ebfaf4f244bc6332903680367001590f2/node_modules/@jsr/deno__doc/html_types.d.ts
 // Copyright 2018-2025 the Deno authors. All rights reserved. MIT license.
 interface HtmlHeadCtx {
   title: string;
