@@ -1,0 +1,77 @@
+diff --git a/deno_doc_wasm.generated.js b/deno_doc_wasm.generated.js
+index cf24417e44a6b05b93663209fecd7e64bb37622a..166d6adbafbad5c0f9e4e45802c76b83857993a5 100755
+--- a/deno_doc_wasm.generated.js
++++ b/deno_doc_wasm.generated.js
+@@ -1012,12 +1012,24 @@ class WasmBuildLoader {
+ 
+     // make file urls work in Node via dnt
+     const isNode = globalThis.process?.versions?.node != null;
++    /*
+     if (isFile && typeof Deno !== "object") {
+       throw new Error(
+         "Loading local files are not supported in this environment",
+       );
+     }
++    */
+     if (isNode && isFile) {
++      // Use Node.js fs module to read the file (patched for Node.js support)
++      const { readFileSync } = await import("node:fs");
++      const { fileURLToPath } = await import("node:url");
++      const wasmCode = readFileSync(fileURLToPath(url));
++      return WebAssembly.instantiate(
++        decompress ? decompress(wasmCode) : wasmCode,
++        imports,
++       );
++    }
++    if (typeof Deno === "object" && isFile) {
+       // the deno global will be shimmed by dnt
+       const wasmCode = await Deno.readFile(url);
+       return WebAssembly.instantiate(
+diff --git a/html_types.js b/html_types.js
+new file mode 100755
+index 0000000000000000000000000000000000000000..cb0ff5c3b541f646105198ee23ac0fc3d805023e
+--- /dev/null
++++ b/html_types.js
+@@ -0,0 +1 @@
++export {};
+diff --git a/mod.js b/mod.js
+index f9d9de1349c2bb575b29138a5fc54654e92c4a47..79bfddf14a5603f7a66b58e6e8d3fa25a891b27a 100755
+--- a/mod.js
++++ b/mod.js
+@@ -1,8 +1,8 @@
+ // Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
+ import { instantiate } from "./deno_doc_wasm.generated.js";
+ import { createCache } from "@jsr/deno__cache-dir";
+-export * from "./types.d.ts";
+-export * from "./html_types.d.ts";
++export * from "./types.js";
++export * from "./html_types.js";
+ const encoder = new TextEncoder();
+ /**
+  * Generate asynchronously an array of documentation nodes for the supplied
+diff --git a/package.json b/package.json
+index 43cd2d00c5782b406398ed791c95b538607020cd..84d47ef25695112cb4ad8f4c2c3558fb779774d3 100755
+--- a/package.json
++++ b/package.json
+@@ -13,10 +13,12 @@
+       "default": "./mod.js"
+     },
+     "./types": {
+-      "default": "./types.d.ts"
++      "types": "./types.d.ts",
++      "default": "./types.js"
+     },
+     "./html-types": {
+-      "default": "./html_types.d.ts"
++      "types": "./html_types.d.ts",
++      "default": "./html_types.js"
+     }
+   },
+   "_jsr_revision": 11
+diff --git a/types.js b/types.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..cb0ff5c3b541f646105198ee23ac0fc3d805023e
+--- /dev/null
++++ b/types.js
+@@ -0,0 +1 @@
++export {};
