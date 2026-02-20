@@ -1,5 +1,5 @@
 {
-  "extends": "@ocavue/tsconfig/dom/app.json", 
+  "extends": "@ocavue/tsconfig/dom/app.json",
   "compilerOptions": {
     "sourceMap": false,
     "declarationMap": false

@@ -19,7 +19,8 @@ export default defineConfig({
   ],
   copy: [
     {
-      from: 'node_modules/@deno/doc/deno_doc_wasm_bg.wasm', to: 'dist/' 
-    }
-  ]
+      from: 'node_modules/@deno/doc/deno_doc_wasm_bg.wasm',
+      to: 'dist/',
+    },
+  ],
 })
