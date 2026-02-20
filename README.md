@@ -41,6 +41,3 @@ const html = await generateHtml(/* ... */)
 
 Please refer to the documentation for the original [`jsr:@deno/doc`](https://jsr.io/@deno/doc/doc) package.
 
-## License
-
-MIT
