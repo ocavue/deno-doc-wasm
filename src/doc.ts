@@ -176,10 +176,10 @@ export function doc(
 ): Promise<Record<string, Array<DocNode>>> {
   const docOptions: DocOptions = { ...options }
   if (!docOptions.load) {
-    docOptions.load = loader
+    docOptions.load = load
   }
   if (!docOptions.resolve) {
-    docOptions.resolve = resolver
+    docOptions.resolve = resolve
   }
   return docBase(specifiers, docOptions)
 }

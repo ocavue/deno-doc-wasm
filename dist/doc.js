@@ -16,7 +16,7 @@ const FETCH_TIMEOUT_MS = 30 * 1e3;
 *
 * Fetches modules from URLs using fetch(), with proper timeout handling.
 */
-async function loader(specifier, _isDynamic, _cacheSetting, _checksum) {
+async function load(specifier, _isDynamic, _cacheSetting, _checksum) {
 	debug("loading module %s", specifier);
 	let url;
 	try {
@@ -72,7 +72,7 @@ async function loader(specifier, _isDynamic, _cacheSetting, _checksum) {
 *
 * Handles resolving relative imports and esm.sh redirects.
 */
-function resolver(specifier, referrer) {
+function resolve(specifier, referrer) {
 	debug("resolving module %s from %s", specifier, referrer);
 	if (specifier.startsWith(".") || specifier.startsWith("/")) return new URL(specifier, referrer).toString();
 	if (!specifier.startsWith("http://") && !specifier.startsWith("https://")) {
@@ -116,8 +116,8 @@ function resolver(specifier, referrer) {
 */
 function doc(specifiers, options = {}) {
 	const docOptions = { ...options };
-	if (!docOptions.load) docOptions.load = loader;
-	if (!docOptions.resolve) docOptions.resolve = resolver;
+	if (!docOptions.load) docOptions.load = load;
+	if (!docOptions.resolve) docOptions.resolve = resolve;
 	return doc$1(specifiers, docOptions);
 }
 
