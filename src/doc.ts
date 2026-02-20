@@ -108,12 +108,13 @@ function createResolver(): (specifier: string, referrer: string) => string {
  * ### Example
  *
  * ```ts
- * import { doc } from "https://deno.land/x/deno_doc/mod.ts";
+ * import { doc } from "@deno/doc";
  *
- * const entries = await doc(["https://deno.land/std/fmt/colors.ts"]);
+ * const records = await doc(["https://deno.land/std/fmt/colors.ts"]);
+ * const colorsDoc = records["https://deno.land/std/fmt/colors.ts"];
  *
- * for (const entry of entries) {
- *   console.log(`name: ${entry.name} kind: ${entry.kind}`);
+ * for (const node of colorsDoc) {
+ *   console.log(`name: ${node.name} kind: ${node.kind}`);
  * }
  * ```
  *

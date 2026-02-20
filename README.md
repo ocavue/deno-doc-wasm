@@ -19,14 +19,13 @@ npm install deno-doc-wasm
 ### Generate documentation nodes
 
 ```ts
-import { doc } from 'deno-doc-wasm'
+import { doc } from "@deno/doc";
 
-const records = await doc(['https://deno.land/std@0.104.0/fmt/colors.ts'])
+const records = await doc(["https://deno.land/std/fmt/colors.ts"]);
+const colorsDoc = records["https://deno.land/std/fmt/colors.ts"];
 
-for (const [url, entries] of Object.entries(records)) {
-  for (const entry of entries) {
-    console.log(`name: ${entry.name} kind: ${entry.kind}`)
-  }
+for (const node of colorsDoc) {
+  console.log(`name: ${node.name} kind: ${node.kind}`);
 }
 ```
 
