@@ -36,6 +36,7 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
+    "@ocavue/utils": "^1.5.0",
     "obug": "^2.1.1",
     "oxc-resolver": "^11.17.1"
   },

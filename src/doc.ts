@@ -7,8 +7,6 @@
 import { readFile } from 'node:fs/promises'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
-import { ResolverFactory } from "oxc-resolver"
-
 import { debug } from './debug'
 import {
   doc as docBase,
@@ -16,12 +14,9 @@ import {
   type DocOptions,
   type LoadResponse,
 } from './re-export'
+import { getOxcResolver } from './resolver'
 
-const resolver = new ResolverFactory({
-  "conditionNames": ["node", "import"],
-  "mainFields": ["module", "main"],
-  preferRelative: true,
-})
+
 
 /** Timeout for fetching modules in milliseconds */
 const FETCH_TIMEOUT_MS = 30 * 1000
@@ -148,6 +143,7 @@ function createResolver(): (specifier: string, referrer: string) => string {
     if (referrer.startsWith("file://")) {
       const filePath = fileURLToPath(new URL(referrer))
       debug("filePath: %s", filePath)
+      const resolver = getOxcResolver()
       const resolved = resolver.resolveFileSync(filePath, specifier)
       if (resolved.error) {
         console.warn(`[deno-doc-wasm] Failed to resolve file ${specifier} from ${filePath} using oxc-resolver: ${resolved.error}`)

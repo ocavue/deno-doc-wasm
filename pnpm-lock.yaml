@@ -13,6 +13,9 @@ importers:
 
   .:
     dependencies:
+      '@ocavue/utils':
+        specifier: ^1.5.0
+        version: 1.5.0
       obug:
         specifier: ^2.1.1
         version: 2.1.1
@@ -487,6 +490,9 @@ packages:
 
   '@ocavue/tsconfig@0.6.3':
     resolution: {integrity: sha512-pxCVe2UUbaXCzPvcyR4s355bpWlyqxECCnXVX0twPfJA2p3dSsdUz+F2QDdrRCEM7MRY9mxWRoA79/2phfbl0A==}
+
+  '@ocavue/utils@1.5.0':
+    resolution: {integrity: sha512-zYOKnvUm8IQ86tNCrpUVBT0lEvoKvyf+9pPS7M4VDB8O1o+msaPMsb/xZx/w5hpcuN1dfehJrkY41ZcdGZpyqg==}
 
   '@oxc-project/types@0.112.0':
     resolution: {integrity: sha512-m6RebKHIRsax2iCwVpYW2ErQwa4ywHJrE4sCK3/8JK8ZZAWOKXaRJFl/uP51gaVyyXlaS4+chU1nSCdzYf6QqQ==}
@@ -2594,6 +2600,8 @@ snapshots:
       - typescript
 
   '@ocavue/tsconfig@0.6.3': {}
+
+  '@ocavue/utils@1.5.0': {}
 
   '@oxc-project/types@0.112.0': {}
 
