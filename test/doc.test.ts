@@ -1,8 +1,22 @@
+import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
+
 import { it, assert, expect } from 'vitest'
 
 import { doc } from '../dist/index.js'
 
-it('can parse from deno.land/std/fmt/colors.ts', async () => {
+it('can parse from a local file', async () => {
+  const url = pathToFileURL(
+    join(import.meta.dirname, 'fixtures', 'test-module.ts'),
+  ).toString()
+  const records = await doc([url])
+  const entries = records[url]
+  expect(entries).toHaveLength(1)
+  expect(entries[0].name).toBe('greet')
+  expect(entries[0].kind).toBe('function')
+})
+
+it('can parse from deno.land', async () => {
   const url = 'https://deno.land/std@0.104.0/fmt/colors.ts'
   const records = await doc([url])
   const entries = records[url]

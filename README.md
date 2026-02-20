@@ -35,6 +35,21 @@ for (const node of colorsDoc) {
 }
 ```
 
+You can also generate documentation from local files using `file://` URLs:
+
+```ts
+import { pathToFileURL } from 'node:url'
+import { doc } from 'deno-doc-wasm'
+
+const url = pathToFileURL('./src/index.ts').toString()
+const records = await doc([url])
+const entries = records[url]
+
+for (const node of entries) {
+  console.log(`name: ${node.name} kind: ${node.kind}`)
+}
+```
+
 ## API reference
 
 Please refer to the documentation for the original [`@deno/doc`](https://jsr.io/@deno/doc/doc) package.
